@@ -52,6 +52,7 @@ if (NOT OPENCV_FOUND)
   find_path(OPENCV_INCLUDE_DIR
     NAMES
       opencv2/core/core.hpp
+      opencv/core.hpp
     DOC
       "OpenCV Include Directory"
     PATHS
@@ -64,6 +65,7 @@ if (NOT OPENCV_FOUND)
   find_path(OPENCV_LIBRARY_DIRS
     NAMES
       opencv_core
+      ${CMAKE_SHARED_LIBRARY_PREFIX}opencv_core${CMAKE_SHARED_LIBRARY_SUFFIX}
     DOC
       "OpenCV Library Directory"
     PATHS

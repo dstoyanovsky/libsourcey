@@ -238,6 +238,16 @@ if(APPLE)
     find_library(AVFOUNDATION AVFoundation)
 
     list(APPEND LibSourcey_BUILD_DEPENDENCIES ${FOUNDATION} ${AVFOUNDATION})
+    if (${WITH_WEBRTC})
+      find_library(COREAUDIO CoreAudio)
+      find_library(AUDIOTOOLBOX AudioToolbox)
+      find_library(COREGRAPHICS CoreGraphics)
+      find_library(COREMEDIA CoreMedia)
+      find_library(COREVIDEO CoreVideo)
+      list(APPEND LibSourcey_BUILD_DEPENDENCIES ${COREAUDIO} ${AUDIOTOOLBOX} ${COREGRAPHICS}
+          ${COREMEDIA} ${COREVIDEO})
+    endif()
+
   endif()
 
   #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -framework Foundation -framework AVFoundation")
@@ -276,6 +286,7 @@ if(WITH_WEBRTC)
     PATHS
       ${WEBRTC_ROOT_DIR}/third_party/boringssl/src/include
       ${WEBRTC_ROOT_DIR}/include/third_party/boringssl/src/include
+      ${WEBRTC_ROOT_DIR}/../src/third_party/boringssl/src/include
     NO_DEFAULT_PATH)
   list(APPEND LibSourcey_VENDOR_INCLUDE_DIRS ${OPENSSL_INCLUDE_DIR})
 endif()

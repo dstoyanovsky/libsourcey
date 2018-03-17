@@ -17,6 +17,7 @@
 
 #include "scy/av/av.h"
 #include "scy/signal.h"
+#include "scy/av/device.h"
 
 #ifdef HAVE_FFMPEG
 
@@ -43,35 +44,7 @@ class AV_API DeviceManager;
 //
 // Device
 //
-
-/// Represents a system audio, video or render device.
-struct AV_API Device
-{
-    enum Type
-    {
-        Unknown,
-        VideoInput,
-        VideoOutput,
-        AudioInput,
-        AudioOutput
-    };
-
-    Type type;
-    std::string id;
-    std::string name;
-    bool isDefault;
-
-    Device();
-    Device(Type type, const std::string& id, const std::string& name, bool isDefault = false);
-
-    void print(std::ostream& os);
-
-    bool operator==(const Device& that) const
-    {
-        return type == that.type && id == that.id && name == that.name;
-    }
-};
-
+//See "scy/av/device.h" for details.
 
 enum MediaCapabilities
 {

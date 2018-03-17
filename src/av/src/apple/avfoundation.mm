@@ -4,7 +4,8 @@
 #endif
 
 #include "scy/logger.h"
-#include "scy/av/devicemanager.h"
+#include "scy/av/av.h"
+#include "scy/av/device.h"
 
 #import <assert.h>
 #import <AVFoundation/AVFoundation.h>

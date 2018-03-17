@@ -46,6 +46,7 @@ find_path(WEBRTC_INCLUDE_DIR
 # ----------------------------------------------------------------------
 if(WEBRTC_INCLUDE_DIR)
   find_existing_directory(debug_dir
+      ${WEBRTC_ROOT_DIR}/lib/Debug
       ${WEBRTC_ROOT_DIR}/lib/x64/Debug
       ${WEBRTC_ROOT_DIR}/out/x64/Debug
       ${WEBRTC_ROOT_DIR}/out/Debug_x64
@@ -53,6 +54,7 @@ if(WEBRTC_INCLUDE_DIR)
       ${WEBRTC_ROOT_DIR}/out/Debug)
 
   find_existing_directory(release_dir
+      ${WEBRTC_ROOT_DIR}/lib/Release
       ${WEBRTC_ROOT_DIR}/lib/x64/Release
       ${WEBRTC_ROOT_DIR}/out/x64/Release
       ${WEBRTC_ROOT_DIR}/out/Release_x64
@@ -159,6 +161,9 @@ if(WEBRTC_INCLUDE_DIR)
 
     # Enable libstdc++ debugging if you build WebRTC with `enable_iterator_debugging=true`
     # set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_GLIBCXX_DEBUG=1")
+  else (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+    add_definitions(-DWEBRTC_POSIX)
+    add_definitions(-DWEBRTC_MAC)
   endif()
 
   # Add vendor include directories
