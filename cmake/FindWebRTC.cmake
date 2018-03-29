@@ -149,8 +149,10 @@ if(WEBRTC_INCLUDE_DIR)
   endif()
 
   # Add required system libraries
-  if(CMAKE_SYSTEM_NAME STREQUAL "Windows" AND MSVC)
+  if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
     add_definitions(-DWEBRTC_WIN)
+    add_definitions(-DINCL_EXTRA_HTON_FUNCTIONS)
+    add_definitions(-DNOMINMAX)
     set(WEBRTC_DEPENDENCIES Secur32.lib Winmm.lib msdmo.lib dmoguids.lib wmcodecdspuuid.lib) # strmbase.lib
   elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     add_definitions(-DWEBRTC_POSIX)

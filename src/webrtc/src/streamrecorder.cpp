@@ -96,9 +96,10 @@ void StreamRecorder::OnFrame(const webrtc::VideoFrame& yuvframe)
         // Set AVFrame->data pointers manually so we don't need to copy any data
         // or convert the pixel format from YUV to some contiguous format.
         auto frame = _encoder.video()->frame;
-        frame->data[0] = (uint8_t*)yuvframe.video_frame_buffer()->DataY();
-        frame->data[1] = (uint8_t*)yuvframe.video_frame_buffer()->DataU();
-        frame->data[2] = (uint8_t*)yuvframe.video_frame_buffer()->DataV();
+        auto yuvBuffer = yuvframe.video_frame_buffer()->ToI420();
+        frame->data[0] = (uint8_t*)yuvBuffer->DataY();
+        frame->data[1] = (uint8_t*)yuvBuffer->DataU();
+        frame->data[2] = (uint8_t*)yuvBuffer->DataV();
         frame->width = yuvframe.width();
         frame->height = yuvframe.height();
         frame->pts = AV_NOPTS_VALUE; // set by encoder

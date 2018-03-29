@@ -191,9 +191,9 @@ void SSLAdapter::flushReadBIO()
     size_t npending = BIO_ctrl_pending(_readBIO);
     if (npending > 0) {
         int nread;
-        char buffer[npending];
-        while ((nread = SSL_read(_ssl, buffer, npending)) > 0) {
-            _socket->onRecv(mutableBuffer(buffer, nread));
+        std::vector<char> buffer(npending);
+        while ((nread = SSL_read(_ssl, buffer.data(), npending)) > 0) {
+            _socket->onRecv(mutableBuffer(buffer.data(), nread));
         }
     }
 }
@@ -203,10 +203,10 @@ void SSLAdapter::flushWriteBIO()
 {
     size_t npending = BIO_ctrl_pending(_writeBIO);
     if (npending > 0) {
-        char buffer[npending];
-        int nread = BIO_read(_writeBIO, buffer, npending);
+        std::vector<char> buffer(npending);
+        int nread = BIO_read(_writeBIO, buffer.data(), npending);
         if (nread > 0) {
-            _socket->write(buffer, nread);
+            _socket->write(buffer.data(), nread);
         }
     }
 }
