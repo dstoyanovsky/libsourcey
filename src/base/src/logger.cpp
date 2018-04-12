@@ -106,8 +106,10 @@ LogChannel* Logger::get(const std::string& name, bool whiny) const
 
 void Logger::setDefault(const std::string& name)
 {
+    auto default_channel = get(name, true);
+
     std::lock_guard<std::mutex> guard(_mutex);
-    _defaultChannel = get(name, true);
+    _defaultChannel = default_channel;
 }
 
 
