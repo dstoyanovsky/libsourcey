@@ -110,8 +110,9 @@ void VideoEncoder::create()
     switch (ctx->codec_id) {
         case AV_CODEC_ID_H264:
             // TODO: Use oparams.quality to determine profile?
-            av_opt_set(ctx->priv_data, "preset", "ultrafast", 0); // veryfast, slow, baseline
-            av_opt_set(ctx->priv_data, "tune", "zerolatency", 0);
+            av_opt_set(ctx->priv_data, "preset", "veryfast", 0); // veryfast, slow, baseline
+            //av_opt_set(ctx->priv_data, "tune", "zerolatency", 0);
+            av_opt_set(ctx->priv_data, "crf", std::to_string(oparams.quality).c_str(), 0);
             av_opt_set(ctx->priv_data, "b", std::to_string(oparams.bitRate).c_str(), 0);
             av_opt_set(ctx->priv_data, "bt", std::to_string(static_cast<int>(oparams.bitRate * 0.1)).c_str(), 0);
             break;
