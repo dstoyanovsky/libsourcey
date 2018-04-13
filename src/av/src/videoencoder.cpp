@@ -98,7 +98,7 @@ void VideoEncoder::create()
     // Define encoding parameters
     if (oparams.bitRate) {
         ctx->bit_rate = oparams.bitRate;
-        ctx->bit_rate_tolerance = static_cast<int>(oparams.bitRate * 0.1); // needed when time_base.num > 1
+        ctx->bit_rate_tolerance = static_cast<int>(oparams.bitRate * 0.3); // needed when time_base.num > 1
     }
 
     // Emit one intra frame every ten
@@ -110,11 +110,12 @@ void VideoEncoder::create()
     switch (ctx->codec_id) {
         case AV_CODEC_ID_H264:
             // TODO: Use oparams.quality to determine profile?
-            av_opt_set(ctx->priv_data, "preset", "veryfast", 0); // veryfast, slow, baseline
-            //av_opt_set(ctx->priv_data, "tune", "zerolatency", 0);
-            av_opt_set(ctx->priv_data, "crf", std::to_string(oparams.quality).c_str(), 0);
+            av_opt_set(ctx->priv_data, "preset", "slow", 0); // veryfast, slow, baseline
+            av_opt_set(ctx->priv_data, "tune", "zerolatency", 0);
+            // if (oparams.quality > 0)
+            //    av_opt_set(ctx, "crf", std::to_string(oparams.quality).c_str(), 0);
             av_opt_set(ctx->priv_data, "b", std::to_string(oparams.bitRate).c_str(), 0);
-            av_opt_set(ctx->priv_data, "bt", std::to_string(static_cast<int>(oparams.bitRate * 0.1)).c_str(), 0);
+            av_opt_set(ctx->priv_data, "bt", std::to_string(static_cast<int>(oparams.bitRate * 0.3)).c_str(), 0);
             break;
         case AV_CODEC_ID_MJPEG:
         case AV_CODEC_ID_LJPEG:

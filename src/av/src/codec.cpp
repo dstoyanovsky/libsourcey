@@ -242,6 +242,7 @@ VideoCodec::VideoCodec(const VideoCodec& r)
     , fps(r.fps)
     , pixelFmt(r.pixelFmt)
 {
+    quality = r.quality; // Temporary solution to copy quality.
 }
 
 
