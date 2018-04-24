@@ -183,6 +183,7 @@ void mkdirr(const std::string& path, int mode)
     std::string level;
     std::istringstream istr(fs::normalize(path));
 
+    bool relative = istr.peek() != '/';
     while (std::getline(istr, level, fs::delimiter)) {
         if (level.empty())
             continue;
@@ -194,7 +195,7 @@ void mkdirr(const std::string& path, int mode)
             continue; // skip drive letter
         }
 #else
-        if (current.empty())
+        if (current.empty() && !relative)
             current += fs::separator;
         current += level;
 #endif
